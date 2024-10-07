@@ -1,0 +1,6 @@
+@BeesyServer_HostAddress = http://localhost:5010
+
+GET {{BeesyServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
