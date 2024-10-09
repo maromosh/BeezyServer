@@ -1,25 +1,107 @@
 ﻿Use master
 Go
-IF EXISTS (SELECT * FROM sys.databases WHERE name = N'BeezyDB')
+
+IF EXISTS (select * from sys.databases WHERE name = N'BeezyDB')
 BEGIN
-    DROP DATABASE BeezyDB;
+
+DROP  DATABASE BeezyDB;
+
 END
-Go
+
 Create Database BeezyDB
 Go
 Use BeezyDB
 Go
-Create Table AppUsers
+
+Create Table Users
 (
-	Id int Primary Key Identity,
-	UserName nvarchar(50) Not Null,
-	UserLastName nvarchar(50) Not Null,
-	UserEmail nvarchar(50) Unique Not Null,
-	UserPassword nvarchar(50) Not Null,
-	IsManager bit Not Null Default 0
+UserId int Primary Key Identity(1,1),
+UserName nvarchar(50) Not Null,
+UserEmail nvarchar(50) Not Null,
+UserPassword nvarchar(50) Unique Not Null,
+UserPhone nvarchar(50) Unique Not Null,
+UserCity nvarchar(50) Not Null,
+UserAddress nvarchar(50) Not Null,
+IsManeger bit Not Null Default 0,
 )
-Insert Into AppUsers Values('admin', 'admin', 'kuku@kuku.com', '1234', 1)
-Go
+
+Create Table Beekeeper
+(
+BeeKeeperId int Primary Key REFERENCES Users(UserId),
+BeekeeperRadius int Not Null,
+BeekeeperKind nvarchar(50) Not Null,
+BeekeeperIsActive bit Not Null Default 1,
+)
+
+Create Table Report
+(
+ReportId int Primary Key Identity(1,1),
+UserId int Not Null FOREIGN KEY REFERENCES Users(UserId),
+BeeKeeperId int FOREIGN KEY REFERENCES Beekeeper(BeeKeeperId),
+ReportLocation DECIMAL(9, 6),
+ReportDirectionsExplanation nvarchar(2000) Not Null,
+ReportUserNumber nvarchar(50) Not Null,
+ReportExplanation nvarchar(2000) Not Null,
+)
+
+Create Table Workshop
+(
+WorkshopId int Primary Key Identity(1,1),
+BeeKeeperId int Not Null FOREIGN KEY REFERENCES Beekeeper(BeeKeeperId),
+WorkshopName nvarchar(100) Not Null,
+WorkshopDate DateTime Not Null,
+WorkshopPrice nvarchar(100) Not Null,
+WorkshopMaxReg int Not Null,
+WorkshopDescription nvarchar(4000) Not Null,
+)
+
+Create Table WorkshopPic
+(
+WorkshopPicID int Primary Key Identity(1,1),
+WorkshopId int FOREIGN KEY REFERENCES Workshop(WorkshopId),
+WorkshopPicEx nvarchar(100),
+)
+
+Create Table WorkshopRegisters
+(
+WorkshopRegisters int Primary Key Identity(1,1),
+WorkshopId int FOREIGN KEY REFERENCES Workshop(WorkshopId),
+UserId int Not Null FOREIGN KEY REFERENCES Users(UserId),
+WorkshopRegistersIsPaid bit Not Null Default 0,
+)
+
+Create Table ChatBeekeepers
+(
+ChatBeekeepers int Primary Key Identity(1,1),
+BeeKeeperId int Not Null FOREIGN KEY REFERENCES Beekeeper(BeeKeeperId),
+ChatBeekeepersText nvarchar(3000) Not Null,
+ChatBeekeepersTIme DateTime Not Null,
+ChatBeekeepersPic nvarchar(100),
+)
+
+Create Table ChatQuestionsAswers
+(
+ChatQuestionsAswersId int Primary Key Identity(1,1),
+UserId int Not Null FOREIGN KEY REFERENCES Users(UserId),
+ChatQuestionsAswersText nvarchar(3000) Not Null,
+ChatQuestionsAswersTIme DateTime Not Null,
+ChatQuestionsAswersPic nvarchar(50),
+)
+
+Create Table ChatPic
+(
+ChatPicID int Primary Key Identity(1,1),
+ChatQuestionsAswersId int FOREIGN KEY REFERENCES ChatQuestionsAswers(ChatQuestionsAswersId),
+ChatPicEx nvarchar(50),
+)
+
+INSERT INTO Users (UserName, UserEmail, UserPassword, UserPhone, UserCity, UserAddress, IsManeger)
+VALUES ('Marom', 'marom.hai@gmail.com', 'Mm16012008', '0538226255', 'Hod Hashron', 'tavor 2a', 1);
+
+INSERT INTO Beekeeper (BeeKeeperId, BeekeeperRadius,BeekeeperKind,BeekeeperIsActive)
+VALUES (1, 10, 'Biodynamic', 1);
+
+
 -- Create a login for the admin user
 CREATE LOGIN [BeezyAdminLogin] WITH PASSWORD = 'thePassword';
 Go
