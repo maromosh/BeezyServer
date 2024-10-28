@@ -14,6 +14,9 @@ namespace BeezyServer.DTO
         public DateTime ChatBeekeepersTime { get; set; }
 
         public string? ChatBeekeepersPic { get; set; }
+
+        public ChatBeekeeper() {}
+
         public ChatBeekeeper(Models.ChatBeekeeper cb)
         {
             ChatBeekeepers = cb.ChatBeekeepers;

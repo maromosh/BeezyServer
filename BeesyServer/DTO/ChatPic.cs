@@ -10,6 +10,8 @@ namespace BeezyServer.DTO
         public int? ChatQuestionsAswersId { get; set; }
 
         public string? ChatPicEx { get; set; }
+
+        public ChatPic() { }
         public ChatPic(Models.ChatPic cp)
         {
             ChatPicId = cp.ChatPicId;

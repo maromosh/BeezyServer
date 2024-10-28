@@ -11,6 +11,7 @@ namespace BeezyServer.DTO
 
         public string? WorkshopPicEx { get; set; }
 
+        public WorkshopPic() { }
         public WorkshopPic(Models.WorkshopPic wp)
         {
             WorkshopPicId = wp.WorkshopPicId;

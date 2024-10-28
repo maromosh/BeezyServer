@@ -19,6 +19,8 @@ namespace BeezyServer.DTO
         public int WorkshopMaxReg { get; set; }
 
         public string WorkshopDescription { get; set; } = null!;
+
+        public Workshop() { }
         public Workshop(Models.Workshop w)
         {
             WorkshopId = w.WorkshopId;

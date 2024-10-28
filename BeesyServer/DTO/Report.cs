@@ -18,6 +18,8 @@ namespace BeezyServer.DTO
        public string ReportUserNumber { get; set; } = null!;
 
         public string ReportExplanation { get; set; } = null!;
+
+        public Report() { }
         public Report(Models.Report r)
         {
             ReportId = r.ReportId;

@@ -21,6 +21,7 @@ namespace BeezyServer.DTO
 
         public bool IsManeger { get; set; }
 
+        public User() { }
         public User(Models.User u)
         {
             UserId = u.UserId;

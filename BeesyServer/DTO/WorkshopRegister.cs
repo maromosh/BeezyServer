@@ -12,6 +12,7 @@ namespace BeezyServer.DTO
 
         public bool WorkshopRegistersIsPaid { get; set; }
 
+        public WorkshopRegister() { }
         public WorkshopRegister(Models.WorkshopRegister wr)
         {
             WorkshopRegisters = wr.WorkshopRegisters;

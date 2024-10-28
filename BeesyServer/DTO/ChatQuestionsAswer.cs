@@ -15,6 +15,8 @@ namespace BeezyServer.DTO
         public DateTime ChatQuestionsAswersTime { get; set; }
 
         public string? ChatQuestionsAswersPic { get; set; }
+
+        public ChatQuestionsAswer (){}
         public ChatQuestionsAswer(Models.ChatQuestionsAswer cqa)
         {
             ChatQuestionsAswersId = cqa.ChatQuestionsAswersId;

@@ -14,7 +14,9 @@ namespace BeezyServer.DTO
 
         public bool BeekeeperIsActive { get; set; }
 
-        public Beekeeper(Models.Beekeeper b) : base(b) // Calls the UserDto constructor
+        public BeeKeeper() { }
+
+        public BeeKeeper(Models.Beekeeper b) : base(b.BeeKeeper) // Calls the UserDto constructor
         {
             BeekeeperRadius = b.BeekeeperRadius;
             BeekeeperKind = b.BeekeeperKind;
@@ -25,30 +27,13 @@ namespace BeezyServer.DTO
         {
             var beekeeper = new Models.Beekeeper
             {
-                UserId = UserId,
-                UserName = UserName,
-                UserEmail = UserEmail,
-                UserPassword = UserPassword,
-                UserPhone = UserPhone,
-                UserCity = UserCity,
-                UserAddress = UserAddress,
-                IsManager = IsManager,
-                BeekeeperRadius = BeekeeperRadius,
-                BeekeeperKind = BeekeeperKind,
-                BeekeeperIsActive = BeekeeperIsActive
+                BeekeeperRadius = this.BeekeeperRadius,
+                BeekeeperKind = this.BeekeeperKind,
+                BeekeeperIsActive = this.BeekeeperIsActive,
+                BeeKeeper = base.GetModel(),
+                BeeKeeperId = this.BeeKeeperId
             };
             return beekeeper;
         }
-        public Models.Beekeeper GetModel()
-        {
-            Models.Beekeeper b = new Models.Beekeeper();
-            b.BeeKeeperId = UserId; // Inherits UserId from UserDto
-            b.BeeKeeperRadius = BeekeeperRadius;
-            b.BeeKeeperKind = BeekeeperKind;
-            b.BeeKeeperIsActive = BeekeeperIsActive;
-
-            return b;
-        }
-
     }
 }
