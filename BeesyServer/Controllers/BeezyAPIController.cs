@@ -34,10 +34,10 @@ namespace BeezyServer.Controllers
                 HttpContext.Session.Clear(); // Logout any previous login attempt
 
                 // Get the user from the database using the email
-                Models.User? modelsUser = context.GetUser(loginDto.UserEmail);
+                Models.User? modelsUser = context.GetUser(loginDto.Email);
 
                 // Check if user exists and if the password matches
-                if (modelsUser == null || modelsUser.UserPassword != loginDto.UserPassword)
+                if (modelsUser == null || modelsUser.UserPassword != loginDto.Password)
                 {
                     return Unauthorized("Access Denied: Invalid email or password.");
                 }
