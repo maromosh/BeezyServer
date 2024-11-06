@@ -62,6 +62,33 @@ namespace BeezyServer.Controllers
         //    return BCrypt.Net.BCrypt.Verify(plainTextPassword, hashedPassword);
         //}
 
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] DTO.User userDto)
+        {
+            try
+            {
+                HttpContext.Session.Clear(); //Logout any previous login attempt
+
+                //Create model user class
+                Models.User modelsUser = userDto.GetModel();
+
+                context.Users.Add(modelsUser);
+                context.SaveChanges();
+
+                //User was added!
+                DTO.User dtoUser = new DTO.User(modelsUser);
+                //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+                return Ok(dtoUser);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
     }
+
+   
+
 
 }
