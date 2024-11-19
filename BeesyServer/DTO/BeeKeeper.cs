@@ -18,6 +18,7 @@ namespace BeezyServer.DTO
 
         public BeeKeeper(Models.Beekeeper b) : base(b.BeeKeeper) // Calls the UserDto constructor
         {
+            BeeKeeperId = b.BeeKeeperId;
             BeekeeperRadius = b.BeekeeperRadius;
             BeekeeperKind = b.BeekeeperKind;
             BeekeeperIsActive = b.BeekeeperIsActive;

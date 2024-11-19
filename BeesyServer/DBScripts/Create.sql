@@ -113,4 +113,11 @@ Go
 -- Add the user to the db_owner role to grant admin privileges
 ALTER ROLE db_owner ADD MEMBER [BeezyAdminUser];
 Go
+
+
+select * from  Beekeeper
+
+
+select * from Users
+
 --scaffold-DbContext "Server = (localdb)\MSSQLLocalDB;Initial Catalog=BeezyDB;User ID=BeezyAdminLogin;Password=thePassword;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models -Context BeezyDbContext -DataAnnotations –force

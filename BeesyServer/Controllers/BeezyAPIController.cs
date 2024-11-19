@@ -86,6 +86,33 @@ namespace BeezyServer.Controllers
             }
 
         }
+
+
+        [HttpPost("registerBeekeeper")]
+        public IActionResult RegisterBeekeeper([FromBody] DTO.BeeKeeper userDto)
+        {
+            try
+            {
+                HttpContext.Session.Clear(); //Logout any previous login attempt
+
+                //Create model user class
+                Models.Beekeeper modelsBeekeeper = userDto.GetModel();
+
+                context.Beekeepers.Add(modelsBeekeeper);
+                context.SaveChanges();
+
+                //User was added!
+                DTO.BeeKeeper dtoUser = new DTO.BeeKeeper(modelsBeekeeper);
+                //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+                return Ok(dtoUser);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
     }
 
    
