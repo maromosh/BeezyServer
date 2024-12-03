@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BeezyServer.Models;
 using BeezyServer.DTO;
+using System.Text.Json;
+using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace BeezyServer.Controllers
 {
@@ -87,7 +90,6 @@ namespace BeezyServer.Controllers
 
         }
 
-
         [HttpPost("registerBeekeeper")]
         public IActionResult RegisterBeekeeper([FromBody] DTO.BeeKeeper userDto)
         {
@@ -113,9 +115,81 @@ namespace BeezyServer.Controllers
 
         }
 
+
+        //This method call the UpdateUser web API on the server and return true if the call was successful
+        //or false if the call fails
+        //[HttpPost("updateUser")]
+        //public async Task<bool> UpdateUser(User user)
+        //{
+        //    //Set URI to the specific function API
+        //    string url = $"{this.baseUrl}updateuser";
+        //    try
+        //    {
+        //        //Call the server API
+        //        string json = JsonSerializer.Serialize(user);
+        //        StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+        //        HttpResponseMessage response = await client.PostAsync(url, content);
+        //        //Check status
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false;
+        //    }
+        //}
+
+        ////This method call the UploadProfileImage web API on the server and return the AppUser object with the given URL
+        ////of the profile image or null if the call fails
+        ////when registering a user it is better first to call the register command and right after that call this function
+        //public async Task<User?> UploadProfileImage(string imagePath)
+        //{
+        //    //Set URI to the specific function API
+        //    string url = $"{this.baseUrl}uploadprofileimage";
+        //    try
+        //    {
+        //        //Create the form data
+        //        MultipartFormDataContent form = new MultipartFormDataContent();
+        //        var fileContent = new ByteArrayContent(File.ReadAllBytes(imagePath));
+        //        form.Add(fileContent, "file", imagePath);
+        //        //Call the server API
+        //        HttpResponseMessage response = await client.PostAsync(url, form);
+        //        //Check status
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            //Extract the content as string
+        //            string resContent = await response.Content.ReadAsStringAsync();
+        //            //Desrialize result
+        //            JsonSerializerOptions options = new JsonSerializerOptions
+        //            {
+        //                PropertyNameCaseInsensitive = true
+        //            };
+        //            User? result = JsonSerializer.Deserialize<User>(resContent, options);
+        //            return result;
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return null;
+        //    }
+        //}
+
+
+
+
     }
 
-   
+
 
 
 }

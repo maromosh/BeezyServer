@@ -101,6 +101,11 @@ VALUES ('Marom', 'marom.hai@gmail.com', 'Mm16012008', '0538226255', 'Hod Hashron
 INSERT INTO Beekeeper (BeeKeeperId, BeekeeperRadius,BeekeeperKind,BeekeeperIsActive)
 VALUES (1, 10, 'Biodynamic', 1);
 
+INSERT INTO Users (UserName, UserEmail, UserPassword, UserPhone, UserCity, UserAddress, IsManeger)
+VALUES ('mosh', 'mosh@gmail.com', '111', '0538226255', 'Hod Hashron', 'tavor 2a', 0);
+
+INSERT INTO Beekeeper (BeeKeeperId, BeekeeperRadius,BeekeeperKind,BeekeeperIsActive)
+VALUES (2, 10, 'Biodynamic', 1);
 
 -- Create a login for the admin user
 CREATE LOGIN [BeezyAdminLogin] WITH PASSWORD = 'thePassword';
