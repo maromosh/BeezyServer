@@ -48,9 +48,21 @@ namespace BeezyServer.Controllers
                 // Login succeeded! Store user information in session
                 HttpContext.Session.SetString("loggedInUser", modelsUser.UserEmail);
 
+                //Check if the user is beekeeper
+                Beekeeper? b = context.GetBeekeeper(modelsUser.UserId);
+                if (b != null)
+                {
+                    b.BeeKeeper = modelsUser;
+                    // Create a DTO for the response
+                    DTO.BeeKeeper dtoBeekeeper = new DTO.BeeKeeper(b);
+                    dtoBeekeeper.ProfileImagePath = GetProfileImageVirtualPath(dtoBeekeeper.UserId);
+                    return Ok(dtoBeekeeper);
+                }
+                    
+
                 // Create a DTO for the response
                 DTO.User dtoUser = new DTO.User(modelsUser);
-                //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+                dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.UserId);
                 return Ok(dtoUser);
             }
             catch (Exception ex)
@@ -80,7 +92,7 @@ namespace BeezyServer.Controllers
 
                 //User was added!
                 DTO.User dtoUser = new DTO.User(modelsUser);
-                //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+                dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.UserId);
                 return Ok(dtoUser);
             }
             catch (Exception ex)
@@ -105,7 +117,7 @@ namespace BeezyServer.Controllers
 
                 //User was added!
                 DTO.BeeKeeper dtoUser = new DTO.BeeKeeper(modelsBeekeeper);
-                //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+                dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.UserId);
                 return Ok(dtoUser);
             }
             catch (Exception ex)
@@ -116,80 +128,171 @@ namespace BeezyServer.Controllers
         }
 
 
+
+
         //This method call the UpdateUser web API on the server and return true if the call was successful
         //or false if the call fails
-        //[HttpPost("updateUser")]
-        //public async Task<bool> UpdateUser(User user)
-        //{
-        //    //Set URI to the specific function API
-        //    string url = $"{this.baseUrl}updateuser";
-        //    try
-        //    {
-        //        //Call the server API
-        //        string json = JsonSerializer.Serialize(user);
-        //        StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-        //        HttpResponseMessage response = await client.PostAsync(url, content);
-        //        //Check status
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return false;
-        //    }
-        //}
+        [HttpPost("updateUser")]
+        public IActionResult UpdateUser([FromBody] DTO.User userDto)
+        {
+            try
+            {
+                //Check if who is logged in
+                string? userEmail = HttpContext.Session.GetString("loggedInUser");
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    return Unauthorized("User is not logged in");
+                }
 
-        ////This method call the UploadProfileImage web API on the server and return the AppUser object with the given URL
-        ////of the profile image or null if the call fails
-        ////when registering a user it is better first to call the register command and right after that call this function
-        //public async Task<User?> UploadProfileImage(string imagePath)
-        //{
-        //    //Set URI to the specific function API
-        //    string url = $"{this.baseUrl}uploadprofileimage";
-        //    try
-        //    {
-        //        //Create the form data
-        //        MultipartFormDataContent form = new MultipartFormDataContent();
-        //        var fileContent = new ByteArrayContent(File.ReadAllBytes(imagePath));
-        //        form.Add(fileContent, "file", imagePath);
-        //        //Call the server API
-        //        HttpResponseMessage response = await client.PostAsync(url, form);
-        //        //Check status
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            //Extract the content as string
-        //            string resContent = await response.Content.ReadAsStringAsync();
-        //            //Desrialize result
-        //            JsonSerializerOptions options = new JsonSerializerOptions
-        //            {
-        //                PropertyNameCaseInsensitive = true
-        //            };
-        //            User? result = JsonSerializer.Deserialize<User>(resContent, options);
-        //            return result;
-        //        }
-        //        else
-        //        {
-        //            return null;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return null;
-        //    }
-        //}
+                //Get model user class from DB with matching email. 
+                Models.User? user = context.GetUser(userEmail);
+                //Clear the tracking of all objects to avoid double tracking
+                context.ChangeTracker.Clear();
+
+                //Check if the user that is logged in is the same user of the task
+                //this situation is ok only if the user is a manager
+                if (user == null || (userDto.UserId != user.UserId))
+                {
+                    return Unauthorized("User is trying to update a different user");
+                }
+
+                Models.User u = userDto.GetModel();
+
+                context.Entry(u).State = EntityState.Modified;
+
+                context.SaveChanges();
+
+                //Task was updated!
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        [HttpPost("UploadProfileImage")]
+        public async Task<IActionResult> UploadProfileImageAsync(IFormFile file)
+        {
+            //Check if who is logged in
+            string? userEmail = HttpContext.Session.GetString("loggedInUser");
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return Unauthorized("User is not logged in");
+            }
+
+            //Get model user class from DB with matching email. 
+            Models.User? user = context.GetUser(userEmail);
+            //Clear the tracking of all objects to avoid double tracking
+            context.ChangeTracker.Clear();
+
+            if (user == null)
+            {
+                return Unauthorized("User is not found in the database");
+            }
 
 
+            //Read all files sent
+            long imagesSize = 0;
 
+            if (file.Length > 0)
+            {
+                //Check the file extention!
+                string[] allowedExtentions = { ".png", ".jpg" };
+                string extention = "";
+                if (file.FileName.LastIndexOf(".") > 0)
+                {
+                    extention = file.FileName.Substring(file.FileName.LastIndexOf(".")).ToLower();
+                }
+                if (!allowedExtentions.Where(e => e == extention).Any())
+                {
+                    //Extention is not supported
+                    return BadRequest("File sent with non supported extention");
+                }
 
+                //Build path in the web root (better to a specific folder under the web root
+                string filePath = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{user.UserId}{extention}";
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    await file.CopyToAsync(stream);
+
+                    if (IsImage(stream))
+                    {
+                        imagesSize += stream.Length;
+                    }
+                    else
+                    {
+                        //Delete the file if it is not supported!
+                        System.IO.File.Delete(filePath);
+                    }
+
+                }
+
+            }
+
+            DTO.User dtoUser = new DTO.User(user);
+            dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.UserId);
+            return Ok(dtoUser);
+        }
+
+        //Helper functions
+
+        //this function gets a file stream and check if it is an image
+        private static bool IsImage(Stream stream)
+        {
+            stream.Seek(0, SeekOrigin.Begin);
+
+            List<string> jpg = new List<string> { "FF", "D8" };
+            List<string> bmp = new List<string> { "42", "4D" };
+            List<string> gif = new List<string> { "47", "49", "46" };
+            List<string> png = new List<string> { "89", "50", "4E", "47", "0D", "0A", "1A", "0A" };
+            List<List<string>> imgTypes = new List<List<string>> { jpg, bmp, gif, png };
+
+            List<string> bytesIterated = new List<string>();
+
+            for (int i = 0; i < 8; i++)
+            {
+                string bit = stream.ReadByte().ToString("X2");
+                bytesIterated.Add(bit);
+
+                bool isImage = imgTypes.Any(img => !img.Except(bytesIterated).Any());
+                if (isImage)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        //this function check which profile image exist and return the virtual path of it.
+        //if it does not exist it returns the default profile image virtual path
+        private string GetProfileImageVirtualPath(int userId)
+        {
+            string virtualPath = $"/profileImages/{userId}";
+            string path = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{userId}.png";
+            if (System.IO.File.Exists(path))
+            {
+                virtualPath += ".png";
+            }
+            else
+            {
+                path = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{userId}.jpg";
+                if (System.IO.File.Exists(path))
+                {
+                    virtualPath += ".jpg";
+                }
+                else
+                {
+                    virtualPath = $"/profileImages/default.png";
+                }
+            }
+
+            return virtualPath;
+        }
     }
-
-
-
-
 }
+
+

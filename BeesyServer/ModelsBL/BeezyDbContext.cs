@@ -11,4 +11,10 @@ public partial class BeezyDbContext : DbContext
         return this.Users.Where(u => u.UserEmail == email)
                            .FirstOrDefault(); // Adjust based on your actual data access method
     }
+
+    public Models.Beekeeper? GetBeekeeper(int id)
+    {
+        return this.Beekeepers.Where(u => u.BeeKeeperId == id)
+                           .FirstOrDefault(); // Adjust based on your actual data access method
+    }
 }
