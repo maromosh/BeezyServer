@@ -172,6 +172,55 @@ namespace BeezyServer.Controllers
 
         }
 
+        [HttpPost("updateBeekeeper")]
+        public IActionResult UpdateBeekeeper([FromBody] DTO.BeeKeeper userDto)
+        {
+            try
+            {
+                //Check if who is logged in
+                string? userEmail = HttpContext.Session.GetString("loggedInUser");
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    return Unauthorized("User is not logged in");
+                }
+
+                //Get model user class from DB with matching email. 
+                Models.User? user = context.GetUser(userEmail);
+                //Clear the tracking of all objects to avoid double tracking
+                // Ensure the logged-in user is the same as the one trying to update the beekeeper
+                if (userDto.UserId != user.UserId)
+                {
+                    return Unauthorized("You can only update your own beekeeper information.");
+                }
+
+                // Get the beekeeper from the database
+                Models.Beekeeper? beekeeper = context.Beekeepers.FirstOrDefault(b => b.BeeKeeperId == user.UserId);
+                if (beekeeper == null)
+                {
+                    return NotFound("Beekeeper not found for this user.");
+                }
+
+                // Update beekeeper fields
+                beekeeper.BeekeeperKind = userDto.BeekeeperKind;
+                beekeeper.BeekeeperRadius = userDto.BeekeeperRadius;
+                beekeeper.BeekeeperIsActive = userDto.BeekeeperIsActive;
+
+                // Save the changes
+                context.SaveChanges();
+
+                // Return the updated beekeeper as a DTO
+                DTO.BeeKeeper updatedBeekeeper = new DTO.BeeKeeper(beekeeper);
+                updatedBeekeeper.ProfileImagePath = GetProfileImageVirtualPath(updatedBeekeeper.UserId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
         [HttpPost("UploadProfileImage")]
         public async Task<IActionResult> UploadProfileImageAsync(IFormFile file)
         {
