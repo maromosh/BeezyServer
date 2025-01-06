@@ -106,7 +106,11 @@ VALUES ('mosh', 'mosh@gmail.com', '111', '0535226255', 'Hod Hashron', 'tavor 2a'
 Go
 
 INSERT INTO Beekeeper (BeeKeeperId, BeekeeperRadius,BeekeeperKind,BeekeeperIsActive)
-VALUES (3, 10, 'Beekeeper', 1);
+VALUES (2, 10, 'Beekeeper', 1);
+
+INSERT INTO Users (UserName, UserEmail, UserPassword, UserPhone, UserCity, UserAddress, IsManeger)
+VALUES ('hi', 'hi@gmail.com', '222', '0535424255', 'Hod Ha4hron', 'tavor 2a', 0);
+Go
 
 -- Create a login for the admin user
 CREATE LOGIN [BeezyAdminLogin] WITH PASSWORD = 'thePassword';
@@ -123,6 +127,7 @@ Go
 
 select * from  Beekeeper
 
+update Beekeeper SET BeekeeperKind=N'דבוראים טיפוליים'
 
 select * from Users
 

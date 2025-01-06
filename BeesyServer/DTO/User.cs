@@ -21,7 +21,7 @@ namespace BeezyServer.DTO
 
         public bool IsManeger { get; set; }
 
-        public string ProfileImagePath { get; set; } = null!;
+        public string? ProfileImagePath { get; set; } = null!;
 
         public User() { }
         public User(Models.User u)
