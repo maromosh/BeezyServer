@@ -99,14 +99,14 @@ INSERT INTO Users (UserName, UserEmail, UserPassword, UserPhone, UserCity, UserA
 VALUES ('Marom', 'marom.hai@gmail.com', 'Mm16012008', '0538226255', 'Hod Hashron', 'tavor 2a', 1);
 
 INSERT INTO Beekeeper (BeeKeeperId, BeekeeperRadius,BeekeeperKind,BeekeeperIsActive)
-VALUES (1, 10, 'Biodynamic', 1);
+VALUES (1, 10, N'דבוראים טיפוליים', 1);
 
 INSERT INTO Users (UserName, UserEmail, UserPassword, UserPhone, UserCity, UserAddress, IsManeger)
 VALUES ('mosh', 'mosh@gmail.com', '111', '0535226255', 'Hod Hashron', 'tavor 2a', 0);
 Go
 
 INSERT INTO Beekeeper (BeeKeeperId, BeekeeperRadius,BeekeeperKind,BeekeeperIsActive)
-VALUES (2, 10, 'Beekeeper', 1);
+VALUES (2, 10, N'דבוראים טיפוליים', 1);
 
 INSERT INTO Users (UserName, UserEmail, UserPassword, UserPhone, UserCity, UserAddress, IsManeger)
 VALUES ('hi', 'hi@gmail.com', '222', '0535424255', 'Hod Ha4hron', 'tavor 2a', 0);
@@ -127,7 +127,7 @@ Go
 
 select * from  Beekeeper
 
-update Beekeeper SET BeekeeperKind=N'דבוראים טיפוליים'
+--update Beekeeper SET BeekeeperKind=N'דבוראים טיפוליים'
 
 select * from Users
 
