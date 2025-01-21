@@ -17,4 +17,12 @@ public partial class BeezyDbContext : DbContext
         return this.Beekeepers.Where(u => u.BeeKeeperId == id)
                            .FirstOrDefault(); // Adjust based on your actual data access method
     }
+    public List<User> GetUsers()
+    {
+        return this.Users.ToList();
+    }
+    public List<Report> GetReports()
+    {
+        return this.Reports.ToList();
+    }
 }

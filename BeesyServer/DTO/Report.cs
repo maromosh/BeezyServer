@@ -11,13 +11,17 @@ namespace BeezyServer.DTO
 
         public int? BeeKeeperId { get; set; }
 
-        public decimal? ReportLocation { get; set; }
+        public int GooglePlaceId { get; set; }
+
+        public string Address { get; set; } = null!;
 
         public string ReportDirectionsExplanation { get; set; } = null!;
 
-       public string ReportUserNumber { get; set; } = null!;
+        public string ReportUserNumber { get; set; } = null!;
 
         public string ReportExplanation { get; set; } = null!;
+
+        public int Status { get; set; }
 
         public Report() { }
         public Report(Models.Report r)
@@ -25,10 +29,12 @@ namespace BeezyServer.DTO
             ReportId = r.ReportId;
             UserId = r.UserId;
             BeeKeeperId = r.BeeKeeperId;
-            ReportLocation = r.ReportLocation;
+            GooglePlaceId = r.GooglePlaceId;
             ReportDirectionsExplanation = r.ReportDirectionsExplanation;
             ReportUserNumber = r.ReportUserNumber;
             ReportExplanation = r.ReportExplanation;
+            Status = r.Status;
+            Address = r.Address;
         }
 
         public Models.Report GetModel()
@@ -37,10 +43,12 @@ namespace BeezyServer.DTO
             r.ReportId = ReportId;
             r.UserId = UserId;
             r.BeeKeeperId = BeeKeeperId;
-            r.ReportLocation = ReportLocation;
             r.ReportDirectionsExplanation = ReportDirectionsExplanation;
             r.ReportUserNumber = ReportUserNumber;
             r.ReportExplanation = ReportExplanation;
+            r.Status = Status;
+            r.Address = Address;
+            r.GooglePlaceId = GooglePlaceId;
 
             return r;
         }

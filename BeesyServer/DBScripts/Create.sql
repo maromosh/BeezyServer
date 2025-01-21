@@ -38,10 +38,12 @@ Create Table Report
 ReportId int Primary Key Identity(1,1),
 UserId int Not Null FOREIGN KEY REFERENCES Users(UserId),
 BeeKeeperId int FOREIGN KEY REFERENCES Beekeeper(BeeKeeperId),
-ReportLocation DECIMAL(9, 6),
+GooglePlaceID INT not null,
+[Address] nvarchar(500) not null,
 ReportDirectionsExplanation nvarchar(2000) Not Null,
 ReportUserNumber nvarchar(50) Not Null,
 ReportExplanation nvarchar(2000) Not Null,
+[Status] int not null --0 new, 1 in process, 2 done
 )
 
 Create Table Workshop

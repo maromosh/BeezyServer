@@ -16,8 +16,11 @@ public partial class Report
 
     public int? BeeKeeperId { get; set; }
 
-    [Column(TypeName = "decimal(9, 6)")]
-    public decimal? ReportLocation { get; set; }
+    [Column("GooglePlaceID")]
+    public int GooglePlaceId { get; set; }
+
+    [StringLength(500)]
+    public string Address { get; set; } = null!;
 
     [StringLength(2000)]
     public string ReportDirectionsExplanation { get; set; } = null!;
@@ -27,6 +30,8 @@ public partial class Report
 
     [StringLength(2000)]
     public string ReportExplanation { get; set; } = null!;
+
+    public int Status { get; set; }
 
     [ForeignKey("BeeKeeperId")]
     [InverseProperty("Reports")]

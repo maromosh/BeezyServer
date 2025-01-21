@@ -341,6 +341,73 @@ namespace BeezyServer.Controllers
 
             return virtualPath;
         }
+
+        [HttpGet("GetUsers")]
+        public IActionResult GetUsers()
+        {
+            try
+            {
+                //Check if who is logged in
+                string? userEmail = HttpContext.Session.GetString("loggedInUser");
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    return Unauthorized("User is not logged in");
+                }
+
+                //Read all users
+
+                List<Models.User> list = context.GetUsers();
+
+                List<DTO.User> users = new List<DTO.User>();
+
+                foreach (Models.User u in list)
+                {
+                    DTO.User user = new DTO.User(u);
+
+                    users.Add(user);
+                }
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetAllReports")]
+        public IActionResult GetAllReports()
+        {
+            try
+            {
+                //Check if who is logged in
+                string? userEmail = HttpContext.Session.GetString("loggedInUser");
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    return Unauthorized("User is not logged in");
+                }
+
+                //Read all posts
+
+                List<Models.Report> list = context.GetReports();
+
+                List<DTO.Report> allReports = new List<DTO.Report>();
+
+                foreach (Models.Report p in list)
+                {
+                    DTO.Report report = new DTO.Report(p);
+
+                    allReports.Add(report);
+                }
+                return Ok(allReports);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
     }
 }
 
