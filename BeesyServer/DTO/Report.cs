@@ -11,7 +11,7 @@ namespace BeezyServer.DTO
 
         public int? BeeKeeperId { get; set; }
 
-        public int GooglePlaceId { get; set; }
+        public string GooglePlaceId { get; set; }
 
         public string Address { get; set; } = null!;
 

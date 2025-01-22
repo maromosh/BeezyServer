@@ -17,7 +17,8 @@ public partial class Report
     public int? BeeKeeperId { get; set; }
 
     [Column("GooglePlaceID")]
-    public int GooglePlaceId { get; set; }
+    [StringLength(100)]
+    public string GooglePlaceId { get; set; } = null!;
 
     [StringLength(500)]
     public string Address { get; set; } = null!;

@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BeezyServer.Models;
 
-[Index("UserPassword", Name = "UQ__Users__5DF58B81BF1C5518", IsUnique = true)]
-[Index("UserPhone", Name = "UQ__Users__F2577C47BC3D2282", IsUnique = true)]
+[Index("UserPassword", Name = "UQ__Users__5DF58B8149914083", IsUnique = true)]
+[Index("UserPhone", Name = "UQ__Users__F2577C47E30BBCB3", IsUnique = true)]
 public partial class User
 {
     [Key]
