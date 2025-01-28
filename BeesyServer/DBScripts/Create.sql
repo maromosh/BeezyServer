@@ -114,6 +114,15 @@ INSERT INTO Users (UserName, UserEmail, UserPassword, UserPhone, UserCity, UserA
 VALUES ('hi', 'hi@gmail.com', '222', '0535424255', 'Hod Ha4hron', 'tavor 2a', 0);
 Go
 
+--INSERT INTO Report (BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
+--VALUES ('1', '', 'golda meir 5', 'behind the car', '0538226255', 'the hive is on my backyard and disturbs my neighbors and me', 0);
+--Go
+
+--INSERT INTO Report (BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
+--VALUES ('1', '', 'Einstein 10, Tel Aviv-Yafo', 'in the back of the resturnt', '0538256255', 'the hive is on my backyard and disturbs my neighbors and me', 0);
+--Go
+
+
 -- Create a login for the admin user
 CREATE LOGIN [BeezyAdminLogin] WITH PASSWORD = 'thePassword';
 Go

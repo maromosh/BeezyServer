@@ -375,6 +375,39 @@ namespace BeezyServer.Controllers
 
         }
 
+        [HttpGet("GetBeekeepers")]
+        public IActionResult GetBeekeepers()
+        {
+            try
+            {
+                //Check if who is logged in
+                string? userEmail = HttpContext.Session.GetString("loggedInUser");
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    return Unauthorized("Beekeeper is not logged in");
+                }
+
+                //Read all users
+
+                List<Models.Beekeeper> list = context.GetBeekepers();
+
+                List<DTO.BeeKeeper> users = new List<DTO.BeeKeeper>();
+
+                foreach (Models.Beekeeper u in list)
+                {
+                    DTO.BeeKeeper user = new DTO.BeeKeeper(u);
+
+                    users.Add(user);
+                }
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
         [HttpGet("GetAllReports")]
         public IActionResult GetAllReports()
         {

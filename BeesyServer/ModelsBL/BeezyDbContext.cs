@@ -21,6 +21,10 @@ public partial class BeezyDbContext : DbContext
     {
         return this.Users.ToList();
     }
+    public List<Beekeeper> GetBeekepers()
+    {
+        return this.Beekeepers.ToList();
+    }
     public List<Report> GetReports()
     {
         return this.Reports.ToList();
