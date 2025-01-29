@@ -440,7 +440,31 @@ namespace BeezyServer.Controllers
             }
 
         }
+        [HttpPost("AddReport")]
+        public IActionResult AddReport([FromBody] DTO.Report r)
+        {
+            try
+            {
+                string? userEmail = HttpContext.Session.GetString("loggedInUser");
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    return Unauthorized("User is not logged in");
+                }
 
+                //Create model user class
+                Models.Report report = r.GetModel();
+                context.Reports.Add(report);
+                context.SaveChanges();
+
+                //Report was added!
+                DTO.Report newReport = new DTO.Report(report);
+                return Ok(newReport);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
     }
 }
