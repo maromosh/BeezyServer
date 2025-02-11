@@ -20,7 +20,7 @@ UserName nvarchar(50) Not Null,
 UserEmail nvarchar(50) Not Null,
 UserPassword nvarchar(50) Unique Not Null,
 UserPhone nvarchar(50) Unique Not Null,
-UserCity nvarchar(50) Not Null,
+UserCity nvarchar(50),
 UserAddress nvarchar(50) Not Null,
 IsManeger bit Not Null Default 0,
 )
@@ -140,6 +140,6 @@ select * from  Beekeeper
 
 --update Beekeeper SET BeekeeperKind=N'דבוראים טיפוליים'
 
-select * from Users
+select * from Report
 
 --scaffold-DbContext "Server = (localdb)\MSSQLLocalDB;Initial Catalog=BeezyDB;User ID=BeezyAdminLogin;Password=thePassword;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models -Context BeezyDbContext -DataAnnotations –force

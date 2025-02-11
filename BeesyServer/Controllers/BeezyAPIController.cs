@@ -363,7 +363,7 @@ namespace BeezyServer.Controllers
                 foreach (Models.User u in list)
                 {
                     DTO.User user = new DTO.User(u);
-
+                    user.ProfileImagePath = GetProfileImageVirtualPath(user.UserId);
                     users.Add(user);
                 }
                 return Ok(users);
@@ -451,6 +451,13 @@ namespace BeezyServer.Controllers
                     return Unauthorized("User is not logged in");
                 }
 
+                Models.User u = context.GetUser(userEmail);
+                if (u == null)
+                {
+                    return Unauthorized("User is not logged in");
+                }
+
+                r.UserId = u.UserId;
                 //Create model user class
                 Models.Report report = r.GetModel();
                 context.Reports.Add(report);
