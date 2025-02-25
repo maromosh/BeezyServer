@@ -115,13 +115,24 @@ VALUES ('hi', 'hi@gmail.com', '222', '0535424255', 'Hod Ha4hron', 'tavor 2a', 0)
 Go
 
 INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
-VALUES (3, 1, 'GhIJQWDl0CIeQUARxks3icF8U8A', 'golda meir 5', 'behind the car', '0538226255', 'the hive is on my backyard and disturbs my neighbors and me', 0);
+VALUES (3, 1, 'Eh5UYXZvciBTdCwgSG9kIEhhc2hhcm9uLCBJc3JhZWwiLiosChQKEgnF4ur8zTkdFREljJC1T22C6RIUChIJZ7bkiCc4HRURpSQrqNrNBR8', 'Tavor Street, Hod HaSharon, Israel', 'behind the car', '0538226255', 'the hive is on my backyard and disturbs my neighbors and me', 0);
 Go
 
 INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
-VALUES (3, 1, 'ChIJgUbEo8cfqokR5lP9_Wh_DaM', 'Einstein 10, Tel Aviv-Yafo', 'in the back of the resturnt', '0538256255', 'the hive is on my backyard and disturbs my neighbors and me', 0);
+VALUES (3, 1, 'ChIJ9c-0GAM2HRURD8FM7U2e7bs', 'Ofer Grand Mall Petach Tikva, Zeev Jabotinsky Street, Petah Tikva, Israel', 'in the back of the resturnt', '0589226255', 'The hive is in the parking lot on the ground floor and needs urgent evacuation.', 0);
 Go
- --ChIJb1ojFLw3HRURmEqlOhzdFUE
+
+INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
+VALUES (3, 1, 'ChIJtxEDRZA3HRUR0a7jrkQDYLs', 'NONO, Jabotinski Street, Hod HaSharon, Israel', 'Behind the restaurant', '0538226255', 'The hive was located on the tree in the yard.', 0);
+Go
+
+--INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
+--VALUES (3, 1, 'GhIJQWDl0CIeQUARxks3icF8U8A', 'golda meir 5', 'behind the car', '0538226255', 'the hive is on my backyard and disturbs my neighbors and me', 0);
+--Go
+
+--INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
+--VALUES (3, 1, 'GhIJQWDl0CIeQUARxks3icF8U8A', 'golda meir 5', 'behind the car', '0538226255', 'the hive is on my backyard and disturbs my neighbors and me', 0);
+--Go
 
 -- Create a login for the admin user
 CREATE LOGIN [BeezyAdminLogin] WITH PASSWORD = 'thePassword';
