@@ -339,7 +339,7 @@ namespace BeezyServer.Controllers
 
             }
 
-            return Ok(virtualPath);
+            return Ok();
         }
         //Helper functions
 
