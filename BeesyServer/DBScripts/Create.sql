@@ -98,24 +98,35 @@ ChatPicEx nvarchar(50),
 )
 
 INSERT INTO Users (UserName, UserEmail, UserPassword, UserPhone, UserCity, UserAddress, IsManeger)
-VALUES ('Marom', 'marom.hai@gmail.com', 'Mm16012008', '0538226255', 'Hod Hashron', 'tavor 2a', 1);
+VALUES ('Marom hai', 'marom.hai@gmail.com', 'Mm16012008', '0538226255', 'Hod Hashron', 'Tavor Street 2, Hod Hasharon, Israel', 1);
+--Tavor Street 2, Hod Hasharon, Israel
+--ChIJ3TbABs45HRURfRVJMV7uES4
 
 INSERT INTO Beekeeper (BeeKeeperId, BeekeeperRadius,BeekeeperKind,BeekeeperIsActive)
-VALUES (1, 10, N'דבוראים טיפוליים', 1);
+VALUES (1, 10, 'Organic / biodynamic beekeepers', 1);
 
 INSERT INTO Users (UserName, UserEmail, UserPassword, UserPhone, UserCity, UserAddress, IsManeger)
-VALUES ('mosh', 'mosh@gmail.com', '111', '0535226255', 'Hod Hashron', 'tavor 2a', 0);
+VALUES ('mosh', 'mosh@gmail.com', '111', '0535226255', 'Hod Hashron', 'HaShahar 57, Raanana, Israel', 0);
+--HaShahar 57, Ra'anana, Israel
+--ChIJ6b_npYtHHRURbLS99aRqa5k
 Go
 
 INSERT INTO Beekeeper (BeeKeeperId, BeekeeperRadius,BeekeeperKind,BeekeeperIsActive)
-VALUES (2, 10, N'דבוראים טיפוליים', 1);
+VALUES (2, 10, 'Non-professional beekeepers', 1);
+Go
 
 INSERT INTO Users (UserName, UserEmail, UserPassword, UserPhone, UserCity, UserAddress, IsManeger)
-VALUES ('hi', 'hi@gmail.com', '222', '0535424255', 'Hod Ha4hron', 'tavor 2a', 0);
+VALUES ('amit batzir', 'amitbatzir55555@gmail.com', 'a123', '0549959870', 'Hod Hashron', 'Golda Meir Street 7, Hod Hasharon, Israel', 0);
+--Golda Me'ir Street 7, Hod Hasharon, Israel
+--ChIJKcDaqjE4HRURBB9fAeZZtmY
+Go
+
+INSERT INTO Beekeeper (BeeKeeperId, BeekeeperRadius,BeekeeperKind,BeekeeperIsActive)
+VALUES (3, 20, 'Agricultural beekeepers', 1);
 Go
 
 INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
-VALUES (3, 1, 'Eh5UYXZvciBTdCwgSG9kIEhhc2hhcm9uLCBJc3JhZWwiLiosChQKEgnF4ur8zTkdFREljJC1T22C6RIUChIJZ7bkiCc4HRURpSQrqNrNBR8', 'Tavor Street, Hod HaSharon, Israel', 'behind the car', '0538226255', 'the hive is on my backyard and disturbs my neighbors and me', 0);
+VALUES (3, 1, 'ChIJ0fKgAM45HRURGg90BZ7zyds', 'Tavor Street 4, Hod Hasharon, Israel', 'behind the car', '0538226255', 'the hive is on my backyard and disturbs my neighbors and me', 0);
 Go
 
 INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
