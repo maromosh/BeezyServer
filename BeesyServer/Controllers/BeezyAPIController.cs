@@ -444,8 +444,8 @@ namespace BeezyServer.Controllers
 
                 //Read all users
 
-                List<Models.Beekeeper> list = context.GetBeekepers();
-
+                List<Models.Beekeeper> list = context.Beekeepers.Include(c => c.BeeKeeper).ToList();
+                //List<Models.Casted> modelCasteds = context.Casteds.Include(c => c.User).ToList();
                 List<DTO.BeeKeeper> users = new List<DTO.BeeKeeper>();
 
                 foreach (Models.Beekeeper u in list)
