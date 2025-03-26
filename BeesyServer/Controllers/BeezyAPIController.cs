@@ -221,6 +221,43 @@ namespace BeezyServer.Controllers
 
         }
 
+        [HttpPost("ReportAssignment")]
+        public IActionResult ReportAssignment([FromBody] DTO.Report report)
+        {
+            try
+            {
+                //Check if who is logged in
+                string? userEmail = HttpContext.Session.GetString("loggedInUser");
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    return Unauthorized("User is not logged in");
+                }
+
+                //Get model user class from DB with matching email. 
+                Models.User? user = context.GetUser(userEmail);
+                //Clear the tracking of all objects to avoid double tracking
+                // Ensure the logged-in user is the same as the one trying to update the beekeeper
+                if (report.BeeKeeperId != user.UserId)
+                {
+                    return Unauthorized("You can only update your own beekeeper information.");
+                }
+
+                // Create Model Report for update
+                Models.Report? modelReport = report.GetModel();
+
+                context.Reports.Update(modelReport);
+                context.SaveChanges();
+                
+                
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
         [HttpPost("UploadProfileImage")]
         public async Task<IActionResult> UploadProfileImageAsync(IFormFile file)
         {
@@ -451,6 +488,7 @@ namespace BeezyServer.Controllers
                 foreach (Models.Beekeeper u in list)
                 {
                     DTO.BeeKeeper user = new DTO.BeeKeeper(u);
+                    user.ProfileImagePath = GetProfileImageVirtualPath(user.UserId);
 
                     users.Add(user);
                 }
