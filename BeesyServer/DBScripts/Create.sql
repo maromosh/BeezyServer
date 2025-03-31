@@ -98,7 +98,7 @@ ChatPicEx nvarchar(50),
 )
 
 INSERT INTO Users (UserName, UserEmail, UserPassword, UserPhone, UserCity, UserAddress, IsManeger)
-VALUES ('Marom hai', 'marom.hai@gmail.com', 'Mm16012008', '0538226255', 'Hod Hashron', 'Tavor Street 2, Hod Hasharon, Israel', 1);
+VALUES ('marom hai', 'marom.hai@gmail.com', 'Mm16012008', '0538226255', 'Hod Hashron', 'Tavor Street 2, Hod Hasharon, Israel', 1);
 --Tavor Street 2, Hod Hasharon, Israel
 --ChIJ3TbABs45HRURfRVJMV7uES4
 
@@ -123,6 +123,11 @@ Go
 
 INSERT INTO Beekeeper (BeeKeeperId, BeekeeperRadius,BeekeeperKind,BeekeeperIsActive)
 VALUES (3, 20, 'Agricultural beekeepers', 1);
+Go
+
+INSERT INTO Users (UserName, UserEmail, UserPassword, UserPhone, UserCity, UserAddress, IsManeger)
+VALUES ('ori geva', 'geva.ori1@gmail.com', '111o', '0584038201', 'Hod Hashron', 'Mazal Arieh Street, Hod HaSharon, Israel', 0);
+--Mazal Arieh Street, Hod HaSharon, Israel
 Go
 
 INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
