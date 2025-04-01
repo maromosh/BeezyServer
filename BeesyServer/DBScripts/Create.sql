@@ -130,16 +130,16 @@ VALUES ('ori geva', 'geva.ori1@gmail.com', '111o', '0584038201', 'Hod Hashron', 
 --Mazal Arieh Street, Hod HaSharon, Israel
 Go
 
-INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
-VALUES (3, 1, 'ChIJ0fKgAM45HRURGg90BZ7zyds', 'Tavor Street 4, Hod Hasharon, Israel', 'behind the car', '0538226255', 'the hive is on my backyard and disturbs my neighbors and me', 0);
+INSERT INTO Report (UserId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
+VALUES (3, 'ChIJ0fKgAM45HRURGg90BZ7zyds', 'Tavor Street 4, Hod Hasharon, Israel', 'behind the car', '0538226255', 'the hive is on my backyard and disturbs my neighbors and me', 0);
 Go
 
-INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
-VALUES (3, 1, 'ChIJ9c-0GAM2HRURD8FM7U2e7bs', 'Ofer Grand Mall Petach Tikva, Zeev Jabotinsky Street, Petah Tikva, Israel', 'in the back of the resturnt', '0589226255', 'The hive is in the parking lot on the ground floor and needs urgent evacuation.', 0);
+INSERT INTO Report (UserId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
+VALUES (3, 'ChIJ9c-0GAM2HRURD8FM7U2e7bs', 'Ofer Grand Mall Petach Tikva, Zeev Jabotinsky Street, Petah Tikva, Israel', 'in the back of the resturnt', '0589226255', 'The hive is in the parking lot on the ground floor and needs urgent evacuation.', 0);
 Go
 
-INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
-VALUES (3, 1, 'ChIJtxEDRZA3HRUR0a7jrkQDYLs', 'NONO, Jabotinski Street, Hod HaSharon, Israel', 'Behind the restaurant', '0538226255', 'The hive was located on the tree in the yard.', 0);
+INSERT INTO Report (UserId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
+VALUES (3, 'ChIJtxEDRZA3HRUR0a7jrkQDYLs', 'NONO, Jabotinski Street, Hod HaSharon, Israel', 'Behind the restaurant', '0538226255', 'The hive was located on the tree in the yard.', 0);
 Go
 
 --INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
