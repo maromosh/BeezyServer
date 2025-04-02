@@ -27,6 +27,6 @@ public partial class BeezyDbContext : DbContext
     }
     public List<Report> GetReports()
     {
-        return this.Reports.ToList();
+        return this.Reports.Include(r => r.ReportPictures).ToList();
     }
 }

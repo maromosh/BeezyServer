@@ -334,6 +334,15 @@ namespace BeezyServer.Controllers
                 return Unauthorized("User is not logged in");
             }
 
+            //first add record in the database for the picture
+            Models.ReportPicture pic = new Models.ReportPicture()
+            {
+                ReportId = reportId
+            };
+
+            context.ReportPictures.Add(pic);
+            context.SaveChanges();
+
             string virtualPath = "";
 
             //Read all files sent
@@ -353,9 +362,9 @@ namespace BeezyServer.Controllers
                     //Extention is not supported
                     return BadRequest("File sent with non supported extention");
                 }
-
+                
                 //Build path in the web root (better to a specific folder under the web root
-                string filePath = $"{this.webHostEnvironment.WebRootPath}\\reportImages\\{reportId}{extention}";
+                string filePath = $"{this.webHostEnvironment.WebRootPath}\\reportImages\\{pic.PicId}{extention}";
                 virtualPath = $"//reportImages//{reportId}{extention}";
 
                 using (var stream = System.IO.File.Create(filePath))
@@ -376,7 +385,12 @@ namespace BeezyServer.Controllers
 
             }
 
-            return Ok();
+           
+
+            DTO.ReportPicture dto = new DTO.ReportPicture(pic);
+            dto.PicPath = GetReportImageVirtualPath(pic.PicId);
+
+            return Ok(dto);
         }
         //Helper functions
 
@@ -428,6 +442,30 @@ namespace BeezyServer.Controllers
                 else
                 {
                     virtualPath = $"/profileImages/default.png";
+                }
+            }
+
+            return virtualPath;
+        }
+
+        private string GetReportImageVirtualPath(int picId)
+        {
+            string virtualPath = $"/reportImages/{picId}";
+            string path = $"{this.webHostEnvironment.WebRootPath}\\reportImages\\{picId}.png";
+            if (System.IO.File.Exists(path))
+            {
+                virtualPath += ".png";
+            }
+            else
+            {
+                path = $"{this.webHostEnvironment.WebRootPath}\\reportImages\\{picId}.jpg";
+                if (System.IO.File.Exists(path))
+                {
+                    virtualPath += ".jpg";
+                }
+                else
+                {
+                    virtualPath = $"";
                 }
             }
 
@@ -522,6 +560,13 @@ namespace BeezyServer.Controllers
                 foreach (Models.Report p in list)
                 {
                     DTO.Report report = new DTO.Report(p);
+                    if (report.Pictures != null)
+                    {
+                        foreach(var pic in report.Pictures)
+                        {
+                            pic.PicPath = GetReportImageVirtualPath(pic.PicId);
+                        }
+                    }
 
                     allReports.Add(report);
                 }

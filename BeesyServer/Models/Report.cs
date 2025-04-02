@@ -38,6 +38,9 @@ public partial class Report
     [InverseProperty("Reports")]
     public virtual Beekeeper? BeeKeeper { get; set; }
 
+    [InverseProperty("Report")]
+    public virtual ICollection<ReportPicture> ReportPictures { get; set; } = new List<ReportPicture>();
+
     [ForeignKey("UserId")]
     [InverseProperty("Reports")]
     public virtual User User { get; set; } = null!;

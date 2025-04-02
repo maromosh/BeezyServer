@@ -46,6 +46,13 @@ ReportExplanation nvarchar(2000) Not Null,
 [Status] int not null --0 new, 1 in process, 2 done
 )
 
+
+Create Table ReportPictures
+(
+	PicId int Primary Key Identity(1,1),
+	ReportId int foreign key references Report(ReportId)
+)
+
 Create Table Workshop
 (
 WorkshopId int Primary Key Identity(1,1),
@@ -130,12 +137,16 @@ VALUES ('ori geva', 'geva.ori1@gmail.com', '111o', '0584038201', 'Hod Hashron', 
 --Mazal Arieh Street, Hod HaSharon, Israel
 Go
 
-INSERT INTO Report (UserId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
-VALUES (3, 'ChIJ0fKgAM45HRURGg90BZ7zyds', 'Tavor Street 4, Hod Hasharon, Israel', 'behind the car', '0538226255', 'the hive is on my backyard and disturbs my neighbors and me', 0);
+INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
+VALUES (3, 1, 'ChIJ0fKgAM45HRURGg90BZ7zyds', 'Tavor Street 4, Hod Hasharon, Israel', 'behind the car', '0538226255', 'the hive is on my backyard and disturbs my neighbors and me', 0);
+Go
+
+INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
+VALUES (2, 1, 'ChIJOW6nyYBMHRUR78bjsxSyBzg', 'Pinsker Street 5, Tel Aviv-Yafo, Israel', 'Its under my house in the street', '0538226255', 'the hive is on the strees in a tree right under my house', 0);
 Go
 
 INSERT INTO Report (UserId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
-VALUES (3, 'ChIJ9c-0GAM2HRURD8FM7U2e7bs', 'Ofer Grand Mall Petach Tikva, Zeev Jabotinsky Street, Petah Tikva, Israel', 'in the back of the resturnt', '0589226255', 'The hive is in the parking lot on the ground floor and needs urgent evacuation.', 0);
+VALUES (2, 'ChIJ9c-0GAM2HRURD8FM7U2e7bs', 'Ofer Grand Mall Petach Tikva, Zeev Jabotinsky Street, Petah Tikva, Israel', 'in the back of the resturnt', '0589226255', 'The hive is in the parking lot on the ground floor and needs urgent evacuation.', 0);
 Go
 
 INSERT INTO Report (UserId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
@@ -170,3 +181,4 @@ select * from  Beekeeper
 select * from Report
 
 --scaffold-DbContext "Server = (localdb)\MSSQLLocalDB;Initial Catalog=BeezyDB;User ID=BeezyAdminLogin;Password=thePassword;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models -Context BeezyDbContext -DataAnnotations –force
+
