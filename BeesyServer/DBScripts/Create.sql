@@ -138,11 +138,11 @@ VALUES ('ori geva', 'geva.ori1@gmail.com', '111o', '0584038201', 'Hod Hashron', 
 Go
 
 INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
-VALUES (3, 1, 'ChIJ0fKgAM45HRURGg90BZ7zyds', 'Tavor Street 4, Hod Hasharon, Israel', 'behind the car', '0538226255', 'the hive is on my backyard and disturbs my neighbors and me', 0);
+VALUES (3, 1, 'ChIJ0fKgAM45HRURGg90BZ7zyds', 'Tavor Street 4, Hod Hasharon, Israel', 'behind the car', '0538226255', 'the hive is on my backyard and disturbs my neighbors and me', 1);
 Go
 
 INSERT INTO Report (UserId, BeeKeeperId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
-VALUES (2, 1, 'ChIJOW6nyYBMHRUR78bjsxSyBzg', 'Pinsker Street 5, Tel Aviv-Yafo, Israel', 'Its under my house in the street', '0538226255', 'the hive is on the strees in a tree right under my house', 0);
+VALUES (2, 1, 'ChIJOW6nyYBMHRUR78bjsxSyBzg', 'Pinsker Street 5, Tel Aviv-Yafo, Israel', 'Its under my house in the street', '0538226255', 'the hive is on the strees in a tree right under my house', 1);
 Go
 
 INSERT INTO Report (UserId, GooglePlaceID, [Address], ReportDirectionsExplanation, ReportUserNumber, ReportExplanation, [Status])
