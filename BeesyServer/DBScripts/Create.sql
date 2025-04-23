@@ -53,6 +53,14 @@ Create Table ReportPictures
 	ReportId int foreign key references Report(ReportId)
 )
 
+Create Table Plants
+(
+PlantId int Primary Key Identity(1,1),
+PlantTopic nvarchar(50) Not Null,
+PlantName nvarchar(50) Not Null,
+PlantPic nvarchar(150) Not Null,
+)
+
 Create Table Workshop
 (
 WorkshopId int Primary Key Identity(1,1),
@@ -179,6 +187,8 @@ select * from  Beekeeper
 --update Beekeeper SET BeekeeperKind=N'דבוראים טיפוליים'
 
 select * from Report
+
+select * from ReportPictures
 
 
 --scaffold-DbContext "Server = (localdb)\MSSQLLocalDB;Initial Catalog=BeezyDB;User ID=BeezyAdminLogin;Password=thePassword;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models -Context BeezyDbContext -DataAnnotations –force
