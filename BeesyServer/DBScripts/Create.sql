@@ -58,6 +58,7 @@ Create Table Plants
 PlantId int Primary Key Identity(1,1),
 PlantTopic nvarchar(50) Not Null,
 PlantName nvarchar(50) Not Null,
+Plantseason nvarchar(50) Not Null,
 PlantPic nvarchar(150) Not Null,
 )
 

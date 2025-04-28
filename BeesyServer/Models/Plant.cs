@@ -17,6 +17,9 @@ public partial class Plant
     [StringLength(50)]
     public string PlantName { get; set; } = null!;
 
+    [StringLength(50)]
+    public string Plantseason { get; set; } = null!;
+
     [StringLength(150)]
     public string PlantPic { get; set; } = null!;
 }

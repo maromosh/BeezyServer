@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
-namespace BeezyServer.Models;
+namespace BeezyServer.DTO;
 
-public partial class Plants
+public class Plants
 {
     public int PlantId { get; set; }
 
@@ -14,12 +11,28 @@ public partial class Plants
 
     public string PlantName { get; set; } = null!;
 
+    public string Plantseason { get; set; } = null!;
+
     public string PlantPic { get; set; } = null!;
     public Plants(Models.Plant p)
     {
         PlantId = p.PlantId;
         PlantTopic = p.PlantTopic;
         PlantName = p.PlantName;
+        Plantseason = p.Plantseason;
         PlantPic = p.PlantPic;
+    }
+
+    public Models.Plant GetModels()
+    {
+        return new Models.Plant()
+        {
+            PlantId = PlantId,
+            PlantTopic = PlantTopic,
+            PlantName = PlantName,
+            Plantseason = Plantseason,
+            PlantPic = PlantPic,
+
+        };
     }
 }

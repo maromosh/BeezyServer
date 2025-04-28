@@ -612,6 +612,109 @@ namespace BeezyServer.Controllers
             }
         }
 
+        [HttpPost("AddPlant")]
+        public IActionResult AddPlant([FromBody] DTO.Plants p)
+        {
+            try
+            {
+                string? userEmail = HttpContext.Session.GetString("loggedInUser");
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    return Unauthorized("User is not logged in");
+                }
+
+                Models.User u = context.GetUser(userEmail);
+                if (u == null)
+                {
+                    return Unauthorized("User is not logged in");
+                }
+
+                
+                //Create model user class
+                Models.Plant plant = p.GetModels();
+                context.Plants.Add(plant);
+                context.SaveChanges();
+
+                //Plant was added!
+                DTO.Plants newPlant = new DTO.Plants(plant);
+                return Ok(newPlant);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetPlants")]
+        public IActionResult GetPlants()
+        {
+            try
+            {
+                string? userEmail = HttpContext.Session.GetString("loggedInUser");
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    return Unauthorized("User is not logged in");
+                }
+
+                Models.User u = context.GetUser(userEmail);
+                if (u == null)
+                {
+                    return Unauthorized("User is not logged in");
+                }
+
+
+                List<Plant> plants = context.Plants.ToList();
+
+                List<Plants> list = new List<Plants>();
+                foreach(Plant plant in plants)
+                {
+                    list.Add(new Plants(plant));
+                }
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("RemovePlant")]
+        public IActionResult RemovePlant([FromBody] DTO.Plants p)
+        {
+            try
+            {
+                string? userEmail = HttpContext.Session.GetString("loggedInUser");
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    return Unauthorized("User is not logged in");
+                }
+
+                Models.User u = context.GetUser(userEmail);
+                if (u == null)
+                {
+                    return Unauthorized("User is not logged in");
+                }
+
+                if (!u.IsManeger)
+                {
+                    return Unauthorized("Only managers can remove pants");
+                }
+
+                //Create model user class
+                Models.Plant plant = p.GetModels();
+                context.Plants.Remove(plant);
+                context.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
         #region Backup / Restore
         [HttpGet("Backup")]
         public async Task<IActionResult> Backup()

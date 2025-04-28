@@ -45,7 +45,7 @@ public partial class BeezyDbContext : DbContext
     {
         modelBuilder.Entity<Beekeeper>(entity =>
         {
-            entity.HasKey(e => e.BeeKeeperId).HasName("PK__Beekeepe__4758570DE37693B5");
+            entity.HasKey(e => e.BeeKeeperId).HasName("PK__Beekeepe__4758570D356BA84C");
 
             entity.Property(e => e.BeeKeeperId).ValueGeneratedNever();
             entity.Property(e => e.BeekeeperIsActive).HasDefaultValue(true);
@@ -57,7 +57,7 @@ public partial class BeezyDbContext : DbContext
 
         modelBuilder.Entity<ChatBeekeeper>(entity =>
         {
-            entity.HasKey(e => e.ChatBeekeepers).HasName("PK__ChatBeek__82274B9543664A78");
+            entity.HasKey(e => e.ChatBeekeepers).HasName("PK__ChatBeek__82274B955248337E");
 
             entity.HasOne(d => d.BeeKeeper).WithMany(p => p.ChatBeekeepers)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -66,14 +66,14 @@ public partial class BeezyDbContext : DbContext
 
         modelBuilder.Entity<ChatPic>(entity =>
         {
-            entity.HasKey(e => e.ChatPicId).HasName("PK__ChatPic__80E0A51B2C6861D5");
+            entity.HasKey(e => e.ChatPicId).HasName("PK__ChatPic__80E0A51BB48F9D4C");
 
             entity.HasOne(d => d.ChatQuestionsAswers).WithMany(p => p.ChatPics).HasConstraintName("FK__ChatPic__ChatQue__45F365D3");
         });
 
         modelBuilder.Entity<ChatQuestionsAswer>(entity =>
         {
-            entity.HasKey(e => e.ChatQuestionsAswersId).HasName("PK__ChatQues__45C0FA9039F4D7AA");
+            entity.HasKey(e => e.ChatQuestionsAswersId).HasName("PK__ChatQues__45C0FA90F4853AC9");
 
             entity.HasOne(d => d.User).WithMany(p => p.ChatQuestionsAswers)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -82,12 +82,12 @@ public partial class BeezyDbContext : DbContext
 
         modelBuilder.Entity<Plant>(entity =>
         {
-            entity.HasKey(e => e.PlantId).HasName("PK__Plants__98FE395CDE3AAA45");
+            entity.HasKey(e => e.PlantId).HasName("PK__Plants__98FE395C49BAC72A");
         });
 
         modelBuilder.Entity<Report>(entity =>
         {
-            entity.HasKey(e => e.ReportId).HasName("PK__Report__D5BD4805692E7461");
+            entity.HasKey(e => e.ReportId).HasName("PK__Report__D5BD4805306B2D4B");
 
             entity.HasOne(d => d.BeeKeeper).WithMany(p => p.Reports).HasConstraintName("FK__Report__BeeKeepe__2E1BDC42");
 
@@ -98,19 +98,19 @@ public partial class BeezyDbContext : DbContext
 
         modelBuilder.Entity<ReportPicture>(entity =>
         {
-            entity.HasKey(e => e.PicId).HasName("PK__ReportPi__B04A93C14BAB9C9F");
+            entity.HasKey(e => e.PicId).HasName("PK__ReportPi__B04A93C10631C446");
 
             entity.HasOne(d => d.Report).WithMany(p => p.ReportPictures).HasConstraintName("FK__ReportPic__Repor__30F848ED");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C606B05DE");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C21D1FFD6");
         });
 
         modelBuilder.Entity<Workshop>(entity =>
         {
-            entity.HasKey(e => e.WorkshopId).HasName("PK__Workshop__7A008C0ADB19DEE7");
+            entity.HasKey(e => e.WorkshopId).HasName("PK__Workshop__7A008C0A111D5F70");
 
             entity.HasOne(d => d.BeeKeeper).WithMany(p => p.Workshops)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -119,14 +119,14 @@ public partial class BeezyDbContext : DbContext
 
         modelBuilder.Entity<WorkshopPic>(entity =>
         {
-            entity.HasKey(e => e.WorkshopPicId).HasName("PK__Workshop__D72386FF36ADC070");
+            entity.HasKey(e => e.WorkshopPicId).HasName("PK__Workshop__D72386FF0A1D555E");
 
             entity.HasOne(d => d.Workshop).WithMany(p => p.WorkshopPics).HasConstraintName("FK__WorkshopP__Works__38996AB5");
         });
 
         modelBuilder.Entity<WorkshopRegister>(entity =>
         {
-            entity.HasKey(e => e.WorkshopRegisters).HasName("PK__Workshop__ACD6E10390000A2A");
+            entity.HasKey(e => e.WorkshopRegisters).HasName("PK__Workshop__ACD6E1033771E1EA");
 
             entity.HasOne(d => d.User).WithMany(p => p.WorkshopRegisters)
                 .OnDelete(DeleteBehavior.ClientSetNull)
