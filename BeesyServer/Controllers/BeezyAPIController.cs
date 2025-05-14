@@ -324,6 +324,71 @@ namespace BeezyServer.Controllers
             return Ok(dtoUser);
         }
 
+        [HttpPost("uploadplantimage")]
+        public async Task<IActionResult> UploadPlantImageAsync(IFormFile file, [FromQuery] int plantId)
+        {
+            //Check if who is logged in
+            string? userEmail = HttpContext.Session.GetString("loggedInUser");
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return Unauthorized("User is not logged in");
+            }
+
+            //Read plants from db
+            Plant? p = context.Plants.Where(pp=>pp.PlantId == plantId).FirstOrDefault(); 
+            if (p == null)
+            {
+                return BadRequest("Plants does not exist");
+            }
+            string virtualPath = "";
+
+            //Read all files sent
+            long imagesSize = 0;
+
+            if (file.Length > 0)
+            {
+                //Check the file extention!
+                string[] allowedExtentions = { ".png", ".jpg" };
+                string extention = "";
+                if (file.FileName.LastIndexOf(".") > 0)
+                {
+                    extention = file.FileName.Substring(file.FileName.LastIndexOf(".")).ToLower();
+                }
+                if (!allowedExtentions.Where(e => e == extention).Any())
+                {
+                    //Extention is not supported
+                    return BadRequest("File sent with non supported extention");
+                }
+
+                //Build path in the web root (better to a specific folder under the web root
+                string filePath = $"{this.webHostEnvironment.WebRootPath}\\plantImages\\{plantId}{extention}";
+                virtualPath = $"//plantImages//{plantId}{extention}";
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    await file.CopyToAsync(stream);
+
+                    if (IsImage(stream))
+                    {
+                        imagesSize += stream.Length;
+                    }
+                    else
+                    {
+                        //Delete the file if it is not supported!
+                        System.IO.File.Delete(filePath);
+                    }
+
+                }
+
+            }
+
+
+
+            DTO.Plants dto = new DTO.Plants(p);
+            dto.PlantPic = GetPlantImageVirtualPath(p.PlantId);
+
+            return Ok(dto);
+        }
 
         [HttpPost("uploadreportimage")]
         public async Task<IActionResult> UploadReportImageAsync(IFormFile file, [FromQuery] int reportId)
@@ -443,6 +508,30 @@ namespace BeezyServer.Controllers
                 else
                 {
                     virtualPath = $"/profileImages/default.png";
+                }
+            }
+
+            return virtualPath;
+        }
+
+        private string GetPlantImageVirtualPath(int picId)
+        {
+            string virtualPath = $"/plantImages/{picId}";
+            string path = $"{this.webHostEnvironment.WebRootPath}\\plantImages\\{picId}.png";
+            if (System.IO.File.Exists(path))
+            {
+                virtualPath += ".png";
+            }
+            else
+            {
+                path = $"{this.webHostEnvironment.WebRootPath}\\plantImages\\{picId}.jpg";
+                if (System.IO.File.Exists(path))
+                {
+                    virtualPath += ".jpg";
+                }
+                else
+                {
+                    virtualPath = $"";
                 }
             }
 
@@ -668,7 +757,9 @@ namespace BeezyServer.Controllers
                 List<Plants> list = new List<Plants>();
                 foreach(Plant plant in plants)
                 {
-                    list.Add(new Plants(plant));
+                    Plants p = new Plants(plant);
+                    p.PlantPic = GetPlantImageVirtualPath(p.PlantId);
+                    list.Add(p);
                 }
                 return Ok(list);
             }

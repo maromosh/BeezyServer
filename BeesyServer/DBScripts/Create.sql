@@ -190,7 +190,7 @@ select * from  Beekeeper
 select * from Report
 
 select * from ReportPictures
-
+select * from Plants
 
 --scaffold-DbContext "Server = (localdb)\MSSQLLocalDB;Initial Catalog=BeezyDB;User ID=BeezyAdminLogin;Password=thePassword;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models -Context BeezyDbContext -DataAnnotations –force
 

@@ -14,6 +14,7 @@ public class Plants
     public string Plantseason { get; set; } = null!;
 
     public string PlantPic { get; set; } = null!;
+    public Plants() { }
     public Plants(Models.Plant p)
     {
         PlantId = p.PlantId;
