@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\moreReportImages\**" />
+    <Content Remove="wwwroot\moreReportImages\**" />
+    <EmbeddedResource Remove="wwwroot\moreReportImages\**" />
+    <None Remove="wwwroot\moreReportImages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
@@ -21,8 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\moreReportImages\" />
     <Folder Include="wwwroot\plantImages\" />
+    <Folder Include="wwwroot\reportImages\" />
   </ItemGroup>
 
 </Project>

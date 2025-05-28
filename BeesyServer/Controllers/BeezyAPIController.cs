@@ -380,9 +380,7 @@ namespace BeezyServer.Controllers
 
                 }
 
-            }
-
-
+            }   
 
             DTO.Plants dto = new DTO.Plants(p);
             dto.PlantPic = GetPlantImageVirtualPath(p.PlantId);
@@ -684,7 +682,7 @@ namespace BeezyServer.Controllers
                 {
                     return Unauthorized("User is not logged in");
                 }
-
+                
                 r.UserId = u.UserId;
                 //Create model user class
                 Models.Report report = r.GetModel();
@@ -717,7 +715,6 @@ namespace BeezyServer.Controllers
                 {
                     return Unauthorized("User is not logged in");
                 }
-
                 
                 //Create model user class
                 Models.Plant plant = p.GetModels();
