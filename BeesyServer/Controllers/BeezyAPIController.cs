@@ -8,6 +8,16 @@ using Microsoft.Data.SqlClient;
 
 namespace BeezyServer.Controllers
 {
+    // This controller handles API requests for the Beezy application.
+    //jason זה תיאור טקסטואלי של אובייקט
+    //הוא מאפשר לנו להמיר אובייקטים של C#
+    //לאובייקטים של ג'ייסון ולהפך
+
+
+    //cookies are used to store session data on the client side
+    //session is used to store data on the server side
+
+
     [Route("api")]
     [ApiController]
     public class BeezyAPIController : ControllerBase
@@ -19,6 +29,7 @@ namespace BeezyServer.Controllers
         //Use dependency injection to get the db context and web host into the constructor
         public BeezyAPIController(BeezyDbContext context, IWebHostEnvironment env)
         {
+            //Initialize the context and web host environment
             this.context = context;
             this.webHostEnvironment = env;
         }
@@ -27,12 +38,14 @@ namespace BeezyServer.Controllers
         [Route("TestServer")]
         public ActionResult<string> TestServer()
         {
+            //This method is used to test if the server is running and responding
             return Ok("Server Responded Successfully");
         }
 
         [HttpPost("login")]
         public IActionResult Login([FromBody] DTO.LoginInfo loginDto)
         {
+            //Check if the loginDto is null
             try
             {
                 HttpContext.Session.Clear(); // Logout any previous login attempt
@@ -461,6 +474,9 @@ namespace BeezyServer.Controllers
         //this function gets a file stream and check if it is an image
         private static bool IsImage(Stream stream)
         {
+            // פונקציה שבודקת אם זרם הוא של תמונה
+            // היא קוראת את הבתים הראשונים ומשווה לסיגנון של סוגי תמונות ידועים (jpg, bmp, gif, png)
+
             stream.Seek(0, SeekOrigin.Begin);
 
             List<string> jpg = new List<string> { "FF", "D8" };
@@ -490,6 +506,9 @@ namespace BeezyServer.Controllers
         //if it does not exist it returns the default profile image virtual path
         private string GetProfileImageVirtualPath(int userId)
         {
+            // מחפשת תמונת פרופיל לפי מזהה משתמש, אם קיימת — מחזירה את הנתיב הווירטואלי שלה
+            // אם לא — מחזירה נתיב של תמונת ברירת מחדל
+
             string virtualPath = $"/profileImages/{userId}";
             string path = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{userId}.png";
             if (System.IO.File.Exists(path))
@@ -514,6 +533,9 @@ namespace BeezyServer.Controllers
 
         private string GetPlantImageVirtualPath(int picId)
         {
+            // בודקת אם קיימת תמונת צמח לפי מזהה
+            // אם כן — מחזירה את הנתיב הווירטואלי שלה, אם לא — מחזירה מחרוזת ריקה
+
             string virtualPath = $"/plantImages/{picId}";
             string path = $"{this.webHostEnvironment.WebRootPath}\\plantImages\\{picId}.png";
             if (System.IO.File.Exists(path))
@@ -538,6 +560,8 @@ namespace BeezyServer.Controllers
 
         private string GetReportImageVirtualPath(int picId)
         {
+            // כמו הקוד של הצמחים, רק שזה לדיווחים — מחפש לפי מזהה תמונה
+
             string virtualPath = $"/reportImages/{picId}";
             string path = $"{this.webHostEnvironment.WebRootPath}\\reportImages\\{picId}.png";
             if (System.IO.File.Exists(path))
@@ -563,6 +587,9 @@ namespace BeezyServer.Controllers
         [HttpGet("GetUsers")]
         public IActionResult GetUsers()
         {
+            // מחזירה רשימת משתמשים מהשרת (רק אם יש משתמש מחובר)
+            // כל משתמש מועבר ל־די טי או, עם נתיב תמונת הפרופיל
+
             try
             {
                 //Check if who is logged in
@@ -596,6 +623,9 @@ namespace BeezyServer.Controllers
         [HttpGet("GetBeekeepers")]
         public IActionResult GetBeekeepers()
         {
+            // מחזירה רשימת דבוראים (רק אם יש משתמש מחובר
+            // כל דבוראי מועבר ל־DTO, כולל תמונת פרופיל
+            // משתמשת ב־אינקלוד כדי לטעון גם מידע מקושר
             try
             {
                 //Check if who is logged in
@@ -630,6 +660,9 @@ namespace BeezyServer.Controllers
         [HttpGet("GetAllReports")]
         public IActionResult GetAllReports()
         {
+            // מחזירה את כל הדיווחים שנשמרו במערכת
+            // על כל דיווח נטענות גם התמונות שקשורות אליו עם הנתיב המתאים
+
             try
             {
                 //Check if who is logged in
@@ -669,6 +702,10 @@ namespace BeezyServer.Controllers
         [HttpPost("AddReport")]
         public IActionResult AddReport([FromBody] DTO.Report r)
         {
+            // מוסיפה דיווח חדש למערכת, רק אם המשתמש מחובר
+            // מזהה את המשתמש לפי כתובת אימייל מה־Session
+            // יוצר אובייקט מסוג Model ושומר אותו במסד הנתונים
+
             try
             {
                 string? userEmail = HttpContext.Session.GetString("loggedInUser");
@@ -702,6 +739,9 @@ namespace BeezyServer.Controllers
         [HttpPost("AddPlant")]
         public IActionResult AddPlant([FromBody] DTO.Plants p)
         {
+            // מוסיפה צמח חדש למערכת, רק אם המשתמש מחובר
+            // הצמח מועבר מה־DTO ל־Model ואז נשמר במסד הנתונים
+
             try
             {
                 string? userEmail = HttpContext.Session.GetString("loggedInUser");
@@ -734,6 +774,7 @@ namespace BeezyServer.Controllers
         [HttpGet("GetPlants")]
         public IActionResult GetPlants()
         {
+            // מחזירה את כל הצמחים שנשמרו במערכת
             try
             {
                 string? userEmail = HttpContext.Session.GetString("loggedInUser");
@@ -769,6 +810,7 @@ namespace BeezyServer.Controllers
         [HttpPost("RemovePlant")]
         public IActionResult RemovePlant([FromBody] DTO.Plants p)
         {
+            // מסירה צמח מהמערכת, רק אם המשתמש מחובר
             try
             {
                 string? userEmail = HttpContext.Session.GetString("loggedInUser");

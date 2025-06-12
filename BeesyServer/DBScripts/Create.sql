@@ -187,7 +187,7 @@ select * from  Beekeeper
 
 --update Beekeeper SET BeekeeperKind=N'דבוראים טיפוליים'
 
-select * from Report
+select * from Users
 
 select * from ReportPictures
 select * from Plants
